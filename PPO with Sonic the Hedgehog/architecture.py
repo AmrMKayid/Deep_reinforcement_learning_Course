@@ -4,6 +4,7 @@ import tensorflow as tf
 # This function selects the probability distribution over actions
 from baselines.common.distributions import make_pdtype
 
+
 # Convolution layer
 def conv_layer(inputs, filters, kernel_size, strides, gain=1.0):
     return tf.layers.conv2d(inputs=inputs,
@@ -25,8 +26,10 @@ def fc_layer(inputs, units, activation_fn=tf.nn.relu, gain=1.0):
 """
 This object creates the PPO Network architecture
 """
+
+
 class PPOPolicy(object):
-    def __init__(self, sess, ob_space, action_space, nbatch, nsteps, reuse = False):
+    def __init__(self, sess, ob_space, action_space, nbatch, nsteps, reuse=False):
         # This will use to initialize our kernels
         gain = np.sqrt(2)
 
@@ -53,7 +56,7 @@ class PPOPolicy(object):
         1 FC for policy
         1 FC for value
         """
-        with tf.variable_scope("model", reuse = reuse):
+        with tf.variable_scope("model", reuse=reuse):
             conv1 = conv_layer(scaled_images, 32, 8, 4, gain)
             conv2 = conv_layer(conv1, 64, 4, 2, gain)
             conv3 = conv_layer(conv2, 64, 3, 1, gain)
@@ -62,7 +65,8 @@ class PPOPolicy(object):
 
             # This build a fc connected layer that returns a probability distribution
             # over actions (self.pd) and our pi logits (self.pi).
-            self.pd, self.pi = self.pdtype.pdfromlatent(fc_common, init_scale=0.01)
+            self.pd, self.pi = self.pdtype.pdfromlatent(
+                fc_common, init_scale=0.01)
 
             # Calculate the v(s)
             vf = fc_layer(fc_common, 1, activation_fn=None)[:, 0]
@@ -96,6 +100,3 @@ class PPOPolicy(object):
         self.step = step
         self.value = value
         self.select_action = select_action
-
-
-

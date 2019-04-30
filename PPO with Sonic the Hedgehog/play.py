@@ -12,19 +12,19 @@ import sonic_env as env
 from baselines.common.vec_env.subproc_vec_env import SubprocVecEnv
 from baselines.common.vec_env.dummy_vec_env import DummyVecEnv
 
+
 def main():
     config = tf.ConfigProto()
 
     # Avoid warning message errors
-    os.environ["CUDA_VISIBLE_DEVICES"]="0"
+    os.environ["CUDA_VISIBLE_DEVICES"] = "0"
 
     # Allowing GPU memory growth
     config.gpu_options.allow_growth = True
 
-
     with tf.Session(config=config):
 
-    	# 0: {'game': 'SonicTheHedgehog-Genesis', 'state': 'SpringYardZone.Act1'},
+        # 0: {'game': 'SonicTheHedgehog-Genesis', 'state': 'SpringYardZone.Act1'},
         # 1: {'game': 'SonicTheHedgehog-Genesis', 'state': 'MarbleZone.Act1'},
         # 2: {'game': 'SonicTheHedgehog-Genesis', 'state': 'GreenHillZone.Act2'},
         # 3: {'game': 'SonicTheHedgehog-Genesis', 'state': 'StarLightZone.Act3'},
@@ -38,19 +38,10 @@ def main():
         # 11: {'game': 'SonicAndKnuckles3-Genesis', 'state': 'HydrocityZone.Act1'},
         # 12: {'game': 'SonicAndKnuckles3-Genesis', 'state': 'AngelIslandZone.Act2'}
 
-        model.play(policy=policies.PPOPolicy, 
-            env= DummyVecEnv([env.make_train_1]),
-            update = 120)
+        model.play(policy=policies.PPOPolicy,
+                   env=DummyVecEnv([env.make_train_1]),
+                   update=120)
+
 
 if __name__ == '__main__':
     main()
-
-
-
-
-
-
-
-
-
-

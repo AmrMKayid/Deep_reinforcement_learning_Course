@@ -1,4 +1,6 @@
 import tensorflow as tf
+
+
 # Get the variables
 def find_trainable_variables(key):
     with tf.variable_scope(key):
